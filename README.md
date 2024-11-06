@@ -57,13 +57,13 @@ We are using the **CICIDS2017** dataset, which provides a realistic representati
 2. **Exploratory Data Analysis (EDA)**:
    - **Scripts**: `eda.py`
    - **Description**: Performs statistical analysis and visualizes feature distributions, correlations, and class imbalances.
-3.**Data Preprocessing**:
+3. **Data Preprocessing**:
    - **Scripts**: `model_training.py`
    - **Description**: Implements machine learning and deep learning models. Includes hyperparameter tuning and performance evaluation using metrics like accuracy, precision, recall, F1-score, and AUC-ROC.
-4.**Data Preprocessing**:
+4. **Data Preprocessing**:
    - **Scripts**: `traffic_simulation.py`
    - **Description**: Simulates real-time network activity to test the IDS in a dynamic environment.
-5.**Data Preprocessing**:
+5. **Data Preprocessing**:
    - **Scripts**: `dashboard.py`
    - **Description**: Interactive dashboard created with Streamlit to display intrusion detection results, metrics, and visualizations.
 
