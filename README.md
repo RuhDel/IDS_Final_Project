@@ -53,4 +53,22 @@ We are using the **CICIDS2017** dataset, which provides a realistic representati
 ## Project Components
 1. **Data Preprocessing**:
    - **Scripts**: `data_preprocessing.py`
+   - **Description**: Loads, cleans, and normalizes the dataset. Encodes categorical features if necessary and saves the preprocessed data for model training.
+2. **Exploratory Data Analysis (EDA)**:
+   - **Scripts**: `eda.py`
    - **Description**: Performs statistical analysis and visualizes feature distributions, correlations, and class imbalances.
+3.**Data Preprocessing**:
+   - **Scripts**: `model_training.py`
+   - **Description**: Implements machine learning and deep learning models. Includes hyperparameter tuning and performance evaluation using metrics like accuracy, precision, recall, F1-score, and AUC-ROC.
+4.**Data Preprocessing**:
+   - **Scripts**: `traffic_simulation.py`
+   - **Description**: Simulates real-time network activity to test the IDS in a dynamic environment.
+5.**Data Preprocessing**:
+   - **Scripts**: `dashboard.py`
+   - **Description**: Interactive dashboard created with Streamlit to display intrusion detection results, metrics, and visualizations.
+
+## Results
+The IDS effectively detects various types of cyberattacks with high accuracy. Detailed results and performance metrics are available on the dashboard.
+
+## Video Presentaion
+A comprehensive video presentation summarizing our approach, methodology, and findings will be submitted through the Bongo platform.
