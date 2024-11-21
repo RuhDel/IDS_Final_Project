@@ -1,5 +1,3 @@
-# evaluate_model.py
-
 import pandas as pd
 from tensorflow.keras.models import load_model
 from sklearn.metrics import confusion_matrix, classification_report, roc_auc_score, roc_curve
@@ -8,34 +6,14 @@ import seaborn as sns
 import pickle
 
 def load_data(test_csv, label_column='label'):
-    """
-    Load testing data from CSV.
-
-    Parameters:
-    - test_csv (str): Path to the testing set CSV.
-    - label_column (str): Name of the label column.
-
-    Returns:
-    - X_test (DataFrame): Testing features.
-    - y_test (Series): Testing labels.
-    """
+    
     df = pd.read_csv(test_csv)
     X_test = df.drop(columns=[label_column])
     y_test = df[label_column]
     return X_test, y_test
 
 def evaluate_model_performance(model, X_test, y_test):
-    """
-    Evaluate the model's performance on the test data.
-
-    Parameters:
-    - model (keras.Model): Trained Keras model.
-    - X_test (DataFrame): Testing features.
-    - y_test (Series): Testing labels.
-
-    Returns:
-    - None
-    """
+    
     # Predict probabilities
     y_pred_prob = model.predict(X_test).ravel()
 
@@ -70,7 +48,7 @@ def evaluate_model_performance(model, X_test, y_test):
     fpr, tpr, thresholds = roc_curve(y_test, y_pred_prob)
     plt.figure(figsize=(6,4))
     plt.plot(fpr, tpr, label=f'AUC = {auc:.4f}')
-    plt.plot([0,1], [0,1], 'k--')  # Diagonal line
+    plt.plot([0,1], [0,1], 'k--')
     plt.xlabel('False Positive Rate')
     plt.ylabel('True Positive Rate')
     plt.title('Receiver Operating Characteristic (ROC) Curve')
@@ -98,7 +76,7 @@ if __name__ == "__main__":
     report_save_path = './models/classification_report.txt'
 
     # Load test data
-    X_test, y_test = load_data(test_csv, label_column='label')  # Updated to 'label'
+    X_test, y_test = load_data(test_csv, label_column='label')
     print(f"Test data loaded: {X_test.shape[0]} samples.")
 
     # Load the trained model
@@ -136,7 +114,7 @@ if __name__ == "__main__":
     fpr, tpr, thresholds = roc_curve(y_test, y_pred_prob)
     plt.figure(figsize=(6,4))
     plt.plot(fpr, tpr, label=f'AUC = {auc:.4f}')
-    plt.plot([0,1], [0,1], 'k--')  # Diagonal line
+    plt.plot([0,1], [0,1], 'k--')
     plt.xlabel('False Positive Rate')
     plt.ylabel('True Positive Rate')
     plt.title('Receiver Operating Characteristic (ROC) Curve')
