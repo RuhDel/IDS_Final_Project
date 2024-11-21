@@ -6,9 +6,6 @@
 - [Dataset](#dataset)
 - [Installation](#installation)
 - [Usage](#usage)
-  - [Running the Streamlit Dashboard](#running-the-streamlit-dashboard)
-  - [Training the Model](#training-the-model)
-  - [Evaluating the Model](#evaluating-the-model)
 - [Dashboard](#dashboard)
 - [Video Presentation](#video-presentation)
 
@@ -29,11 +26,8 @@ The IDS project follows a structured approach to ensure comprehensive detection 
 IDS_Project/
 - data/
   - classification_report.txt
-  - combined.csv
-  - preprocessed.csv
-  - roc_curve.csv
-  - test.csv
-  - train.csv
+  - roc_curve.png
+  - (Downloaded Data set)
 - models/
   - dnn_model.h5
   - confusion_matrix.png
@@ -73,27 +67,67 @@ To set up the project on your local machine, follow these steps:
    ```bash
    git clone https://github.com/yourusername/IDS_Project.git
    cd IDS_Project
-2. **Create a Virtual Environment (Recommended)**
+2. **Download Dataset**
+   Download the IDS2017 Dataset from [Kaggle](https://www.kaggle.com/datasets/chethuhn/network-intrusion-dataset?resource=download)
+3. **Create a Virtual Environment (Recommended)**
 It's best practice to use a virtual environment to manage dependencies.
    ```bash
    python -m venv venv
-3. **Activate the Virtual Enviroment**
+4. **Activate the Virtual Enviroment**
 - Windows:
   ```bash
   venv\Scripts\activate
 - macOS/Linux:
   ```bash
   source venv/bin/activate
-4. **Install Dependencies**
+5. **Install Dependencies**
 - Navigate to the project root and install required packages using requirements.txt
   ```bash
   pip install --upgrade pip
   pip install -r requirements
   
 ## Usage
-### Running the streamlit dashboard
-The dashboard provides an interactive interface to visualize the IDS performance metrics.
-1. Navigate to the Dashboard Directory
+### Combine the Dataset
+This step consolidates all the individual CSV files into a single dataset for ease of processing and analysis.
+- Run the script **combine_csv.py** to merge the files:
+   ```bash
+   python combine_csv.py
+**Output:** A single CSV file named *combined.csv* containing data from all input files.
+   
+### Preprocess the Combined Dataset
+Preprocessing cleans and standardizes the *combined.csv* data by handling missing values, encoding categorical variables, and scaling numeric features as necessary.
+- Run the script **preprocess.py** to prepare the data for modeling:
+   ```bash
+   python preprocess.py
+**Output:** A preprocessed dataset saved as *preprocessed.csv*.
+
+
+### Split Data
+This step divides the preprocessed dataset into two subsets: 80% for training and 20% for testing. This ensures that the model can be evaluated on unseen data.
+- Run the script **split_data.py** to split the dataset:
+   ```bash
+   python split_data.py
+**Output:** Two CSV files, *train.csv* and *test.csv*, containing the training and testing data, respectively.
+
+### Train Model
+Train the Intrusion Detection System model using the training data. This step utilizes deep learning algorithms to build a model capable of detecting anomalies or intrusions.
+- Run the script **train_model.py** to train the model:
+   ```bash
+   python train_model.py
+**Output:** A trained model saved as *dnn_model.h5* in the **models/** directory.
+  
+### Evaluating the Model
+Evaluate the performance of the trained model using test data. This step generates metrics like confusion matrices, classification reports, and ROC curves to measure the model's effectiveness.
+1. Ensure the model is trained:
+   Confirm that **train_model.py** has been executed and the file *dnn_model.h5* exists in the **models/** directory.
+2. Run the evaluation script
+   ```bash
+   python evaluate_model.py
+**Output:** Evaluation results, including performance reports and visualizations, saved in the **data/** and **models/** directories for further analysis.
+
+### Running the Streamlit Dashboard
+The Streamlit dashboard provides an interactive user interface to visualize and analyze the IDS performance metrics, such as accuracy, precision, recall, and other evaluation results.
+1. Navigate to the **dashboard/** Directory:
    ```bash
    cd dashboard
 3. Run the Streamlit App
@@ -103,24 +137,6 @@ The dashboard provides an interactive interface to visualize the IDS performance
    python -m streamlit run app.py
 5. Access the Dashboard
    After running the command, Streamlit will provide a local URL (e.g., http://localhost:8501). Open this URL in your web browser to view the dashboard.
-   
-### Training the Model
-If you wish to train the model yourself:
-1. Navigate to the Scripts Directory
-   ```bash
-   cd scripts
-2. Run the Evaluation Script
-   ```bash
-   python train_model.py
-   
-### Evaluating the Model
-To evaluate the trained model:
-1. Ensure the Model is Trained
-   Make sure train_model.py has been executed and dnn_model.h5 is available in the **models/** directory.
-2. Run the Evaluation Script
-   ```bash
-   python evaluate_model.py
-  This script generates evaluation reports, including confusion matrices and ROC curves, and saves them in the **data/** and **models/** directories.
 
 ## Dashboard
 The Streamlit dashboard offers a comprehensive view of the IDS's performance, featuring:
