@@ -25,14 +25,9 @@ Welcome to the **Intrusion Detection System (IDS) Project**! This project is dev
 The IDS project follows a structured approach to ensure comprehensive detection and analysis:
 IDS_Project/
 - data/
-  - classification_report.txt
-  - roc_curve.png
-  - (Downloaded Data set)
+  - (*Downloaded Data set*)
 - models/
-  - dnn_model.h5
-  - confusion_matrix.png
-  - roc_curve.png
-  - training_history.json
+  - (*Empty*)
 - dashboard/
   - app.py
 - scripts/
@@ -87,6 +82,9 @@ It's best practice to use a virtual environment to manage dependencies.
   pip install -r requirements
   
 ## Usage
+### Installing the Dataset
+Download the Dataset from [Kaggle](https://www.kaggle.com/datasets/chethuhn/network-intrusion-dataset?resource=download), once dowloaded place the .cap files in **/data** folder.
+
 ### Combine the Dataset
 This step consolidates all the individual CSV files into a single dataset for ease of processing and analysis.
 - Run the script **combine_csv.py** to merge the files:
