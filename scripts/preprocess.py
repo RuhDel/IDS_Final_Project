@@ -1,5 +1,3 @@
-# preprocess.py
-
 import pandas as pd
 import numpy as np
 from sklearn.preprocessing import LabelEncoder, StandardScaler
@@ -7,15 +5,7 @@ from sklearn.impute import SimpleImputer
 import pickle
 
 def preprocess_data(input_csv, output_csv):
-    """
-    Preprocess the IDS data by handling missing values, encoding categorical variables,
-    replacing infinite values, capping large values, normalizing numerical features,
-    and mapping labels to binary.
-
-    Parameters:
-    - input_csv (str): Path to the input combined CSV file.
-    - output_csv (str): Path to save the preprocessed CSV file.
-    """
+    
     # Load the data
     print(f"Loading data from {input_csv}...")
     df = pd.read_csv(input_csv)
@@ -40,14 +30,12 @@ def preprocess_data(input_csv, output_csv):
     print(f"Numerical columns: {len(numerical_cols)}")
     print(f"Categorical columns: {len(categorical_cols)}")
 
-    # Optional: Cap extremely large values to a defined threshold
-    # Define a threshold (e.g., 1e6). Adjust based on domain knowledge.
+    # Cap extremely large values to a defined threshold
     threshold = 1e6
     print(f"Capping numerical values at {threshold} to handle extremely large values...")
     df[numerical_cols] = df[numerical_cols].applymap(lambda x: threshold if x > threshold else x)
     print("Capping complete.")
 
-    # Handling Missing Values
     # Impute numerical features with median
     print("Imputing missing values in numerical columns with median...")
     num_imputer = SimpleImputer(strategy='median')
@@ -79,23 +67,16 @@ def preprocess_data(input_csv, output_csv):
     # Mapping Labels to Binary
     if 'label' in df.columns:
         print("Mapping labels to binary: 'Normal' as 0 and others as 1.")
-        # Assuming 'Normal' is encoded as the label for normal traffic
-        # If 'Normal' is not already encoded as 0, adjust accordingly
+        
         # Check unique labels before mapping
         unique_labels = df['label'].unique()
         print(f"Unique labels before mapping: {unique_labels}")
 
-        # Assuming 'Normal' is represented by a specific integer after Label Encoding
         # Find the integer value corresponding to 'Normal'
         normal_label = None
         if 'normal' in df['label'].astype(str).str.lower().unique():
-            # If labels are still in string format
             df['label'] = df['label'].apply(lambda x: 0 if str(x).lower() == 'normal' else 1)
         else:
-            # If labels have been label-encoded
-            # Assuming LabelEncoder mapped 'Normal' to 0 or another consistent value
-            # You might need to refer to the LabelEncoder for exact mapping
-            # For simplicity, let's assume 'Normal' is 0 after encoding
             df['label'] = df['label'].apply(lambda x: 0 if x == 0 else 1)
         print("Label mapping complete.")
     else:
@@ -120,6 +101,6 @@ def preprocess_data(input_csv, output_csv):
     print("Preprocessing artifacts saved.")
 
 if __name__ == "__main__":
-    input_combined_csv = './data/combined.csv'          # Input combined CSV
-    output_preprocessed_csv = './data/preprocessed.csv' # Output preprocessed CSV
+    input_combined_csv = './data/combined.csv'
+    output_preprocessed_csv = './data/preprocessed.csv'
     preprocess_data(input_combined_csv, output_preprocessed_csv)
