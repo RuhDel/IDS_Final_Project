@@ -1,5 +1,3 @@
-# dashboard/app.py
-
 import streamlit as st
 import pandas as pd
 import numpy as np
@@ -31,19 +29,19 @@ It visualizes key findings, including classification metrics, confusion matrix, 
 def load_classification_report(report_path):
     if not os.path.exists(report_path):
         st.error(f"Classification report not found at {report_path}. Please ensure the file exists.")
-        return pd.DataFrame()  # Return empty DataFrame if file not found
+        return pd.DataFrame()
 
     with open(report_path, 'r') as f:
         report = f.read()
     # Convert the report to a pandas DataFrame
     report_data = []
     lines = report.split('\n')
-    for line in lines[2:-4]:  # Adjust indices based on the report structure
+    for line in lines[2:-4]:
         if line.strip() == '':
             continue
         parts = line.split()
         if len(parts) < 5:
-            continue  # Skip lines that don't have enough parts
+            continue
         class_name = parts[0]
         try:
             precision, recall, f1, support = float(parts[1]), float(parts[2]), float(parts[3]), int(parts[4])
@@ -55,7 +53,7 @@ def load_classification_report(report_path):
                 'Support': support
             })
         except ValueError:
-            continue  # Skip lines with invalid numerical values
+            continue
     return pd.DataFrame(report_data)
 
 # Function to load training history
@@ -81,7 +79,6 @@ classification_report_df = load_classification_report('../data/classification_re
 training_history = load_training_history('../models/training_history.json')
 
 # Extract overall metrics
-# Ensure that classification_report_df is not empty
 if not classification_report_df.empty:
     accuracy = 0.98  # As per your report
     roc_auc = 0.9989  # As per your report
@@ -158,7 +155,6 @@ if not classification_report_df.empty:
 
     fig_roc, ax_roc = plt.subplots(figsize=(6,4))
     # Simulate y_test and y_pred_prob based on confusion matrix for demonstration
-    # Replace this with actual y_test and y_pred_prob if available
     y_true = [0]*cm[0][0] + [1]*cm[1][0] + [0]*cm[0][1] + [1]*cm[1][1]
     y_pred_prob = [0.1]*cm[0][0] + [0.2]*cm[1][0] + [0.8]*cm[0][1] + [0.9]*cm[1][1]
     fpr, tpr, _ = roc_curve(y_true, y_pred_prob)
@@ -240,9 +236,3 @@ if not classification_report_df.empty:
         st.markdown(get_table_download_link(classification_report_df, 'classification_report.csv', 'Download Classification Report'), unsafe_allow_html=True)
     else:
         st.warning("Classification report data is not available to download.")
-
-    # Footer
-    st.markdown("""
-    ---
-    *Created with Streamlit*
-    """)
