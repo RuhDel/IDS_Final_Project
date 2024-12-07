@@ -1,25 +1,14 @@
-# split_data.py
-
 import pandas as pd
 from sklearn.model_selection import train_test_split
 
 def split_data(input_csv, train_csv, test_csv, test_size=0.2, random_state=42):
-    """
-    Split the dataset into training and testing sets.
-
-    Parameters:
-    - input_csv (str): Path to the preprocessed CSV file.
-    - train_csv (str): Path to save the training set CSV.
-    - test_csv (str): Path to save the testing set CSV.
-    - test_size (float): Proportion of the dataset to include in the test split.
-    - random_state (int): Random seed for reproducibility.
-    """
+    
     # Load the preprocessed data
     print(f"Loading preprocessed data from {input_csv}...")
     df = pd.read_csv(input_csv)
 
     # Define the label column based on your dataset
-    label_column = 'label'  # Updated to lowercase
+    label_column = 'label'
 
     if label_column not in df.columns:
         raise ValueError(f"Label column '{label_column}' not found in the dataset.")
@@ -47,7 +36,7 @@ def split_data(input_csv, train_csv, test_csv, test_size=0.2, random_state=42):
     print(f"Testing set saved to {test_csv} with shape {test_df.shape}.")
 
 if __name__ == "__main__":
-    input_preprocessed_csv = './data/preprocessed.csv'         # Input preprocessed CSV
-    output_train_csv = './data/train.csv'                      # Output training set CSV
-    output_test_csv = './data/test.csv'                        # Output testing set CSV
+    input_preprocessed_csv = './data/preprocessed.csv'
+    output_train_csv = './data/train.csv'
+    output_test_csv = './data/test.csv'
     split_data(input_preprocessed_csv, output_train_csv, output_test_csv)
