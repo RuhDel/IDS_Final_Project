@@ -1,5 +1,3 @@
-# train_model.py
-
 import pandas as pd
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense, Dropout
@@ -8,34 +6,12 @@ from sklearn.utils import class_weight
 import json
 
 def load_data(train_csv, label_column='label'):
-    """
-    Load training data from CSV.
-
-    Parameters:
-    - train_csv (str): Path to the training set CSV.
-    - label_column (str): Name of the label column.
-
-    Returns:
-    - X_train (DataFrame): Training features.
-    - y_train (Series): Training labels.
-    """
     df = pd.read_csv(train_csv)
     X_train = df.drop(columns=[label_column])
     y_train = df[label_column]
     return X_train, y_train
 
 def build_dnn_model(input_dim, output_dim=1, learning_rate=0.001):
-    """
-    Build and compile the DNN model.
-
-    Parameters:
-    - input_dim (int): Number of input features.
-    - output_dim (int): Number of output neurons.
-    - learning_rate (float): Learning rate for the optimizer.
-
-    Returns:
-    - model (keras.Model): Compiled Keras model.
-    """
     model = Sequential()
     model.add(Dense(128, input_dim=input_dim, activation='relu'))
     model.add(Dropout(0.5))
@@ -54,20 +30,7 @@ def build_dnn_model(input_dim, output_dim=1, learning_rate=0.001):
     return model
 
 def train_model(model, X_train, y_train, epochs=50, batch_size=32, validation_split=0.2):
-    """
-    Train the DNN model.
 
-    Parameters:
-    - model (keras.Model): Compiled Keras model.
-    - X_train (DataFrame): Training features.
-    - y_train (Series): Training labels.
-    - epochs (int): Number of training epochs.
-    - batch_size (int): Size of training batches.
-    - validation_split (float): Fraction of training data for validation.
-
-    Returns:
-    - history (History): Keras History object containing training metrics.
-    """
     # Calculate class weights to handle class imbalance
     class_weights_values = class_weight.compute_class_weight(
         class_weight='balanced',
@@ -90,24 +53,10 @@ def train_model(model, X_train, y_train, epochs=50, batch_size=32, validation_sp
     return history
 
 def save_model(model, model_path):
-    """
-    Save the trained model to disk.
-
-    Parameters:
-    - model (keras.Model): Trained Keras model.
-    - model_path (str): Path to save the model.
-    """
     model.save(model_path)
     print(f"Model saved to {model_path}.")
 
 def save_training_history(history, history_file):
-    """
-    Save the training history to a JSON file.
-
-    Parameters:
-    - history (History): Keras History object.
-    - history_file (str): Path to save the history JSON.
-    """
     history_dict = history.history
     with open(history_file, 'w') as f:
         json.dump(history_dict, f)
@@ -120,7 +69,7 @@ if __name__ == "__main__":
     history_save_path = './models/training_history.json'
 
     # Load data
-    X_train, y_train = load_data(train_csv, label_column='label')  # Updated to 'label'
+    X_train, y_train = load_data(train_csv, label_column='label')
     input_dim = X_train.shape[1]
     print(f"Input dimension: {input_dim}")
 
